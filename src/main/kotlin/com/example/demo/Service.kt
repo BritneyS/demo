@@ -1,10 +1,14 @@
+package com.example.demo
+
 import org.springframework.stereotype.Component
-import reactor.core.publisher.Mono
+import reactor.core.publisher.Flux
 
 @Component
-class Service {
+class Service(
+    private val bookRepository: Repository
+) {
 
-    fun getBooks(): Mono<List<BookDto>> {
-
+    fun getBooks(): Flux<Book> {
+        return bookRepository.findAll()
     }
 }
