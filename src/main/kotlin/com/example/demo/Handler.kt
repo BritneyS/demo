@@ -1,3 +1,6 @@
+package com.example.demo
+
+import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
@@ -9,8 +12,10 @@ class Handler(
 ) {
 
     fun getBooks(request: ServerRequest): Mono<ServerResponse> {
-        return bookService.getBooks()
-            .flatMap(ServerResponse.ok()::bodyValue)
+        return ServerResponse.ok()
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(bookService.getBooks(), Book::class.java)
+
     }
 
 }
