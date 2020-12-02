@@ -1,4 +1,9 @@
+package com.example.demo
+
 class BookDto (
-    // JsonIgnore?
-    val book: Book
-)
+    private val book: Book
+) {
+    val id = book.id
+    val author = book.author
+    val title = book.title
+}
