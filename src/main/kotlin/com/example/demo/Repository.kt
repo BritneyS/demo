@@ -1,4 +1,5 @@
 package com.example.demo
 
-class Repository {
-}
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository
+
+interface Repository : ReactiveMongoRepository<Book, String>
