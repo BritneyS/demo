@@ -1,0 +1,20 @@
+########################################################################################################################
+# Common application properties that are shared across all environments.
+# These serve as default values and can be overridden in application-${SPRING_PROFILES_ACTIVE}.yml files.
+# NOTE: No secret keys should go in this file.
+########################################################################################################################
+
+spring:
+  data.mongodb:
+    database: "demo-books"
+    auto-index-creation: true
+
+web.client:
+  enabled: true
+  properties:
+    cors:
+      allowedOrigins: "*"
+      allowedHeaders: "*"
+      allowedMethods: "*"
+    csrf:
+      enabled: false
