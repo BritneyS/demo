@@ -13,6 +13,11 @@ class Service(
         return bookRepository.findAll()
     }
 
+    fun getBookById(id: String): Mono<Book> {
+        return bookRepository.findById(id)
+            .switchIfEmpty(Mono.error(Exception("No book found with id $id")))
+    }
+
     fun createBook(bookRequest: CreateBookRequestBody): Mono<Book> {
         return saveBook(Book(author = bookRequest.author, title = bookRequest.title))
     }

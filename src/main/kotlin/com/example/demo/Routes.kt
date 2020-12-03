@@ -13,6 +13,7 @@ class Routes(
     @Bean
     fun bookRouter(): RouterFunction<ServerResponse> = router {
         GET("/books", bookHandler::getBooks)
+        GET("/books/{id}", bookHandler::getBookById)
         POST("/books", bookHandler::createBook)
 
     }

@@ -20,6 +20,12 @@ class Handler(
 
     }
 
+    fun getBookById(request: ServerRequest): Mono<ServerResponse> {
+        val id = request.pathVariable("id")
+        return bookService.getBookById(id)
+            .flatMap(ServerResponse.ok()::bodyValue)
+    }
+
     fun createBook(request: ServerRequest): Mono<ServerResponse> {
         return request
             .bodyToMono<CreateBookRequestBody>()
