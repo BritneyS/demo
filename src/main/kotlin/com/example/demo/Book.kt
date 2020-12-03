@@ -18,5 +18,5 @@ data class Book(
     @CreatedDate
     val createdOn: Instant = Instant.now(),
     @LastModifiedDate
-    val updatedOn: Instant
+    val updatedOn: Instant? = null
 )
