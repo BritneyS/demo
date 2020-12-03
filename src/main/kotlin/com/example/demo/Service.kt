@@ -16,7 +16,8 @@ class Service(
     fun createBook(bookRequest: CreateBookRequestBody): Mono<Book> {
         return saveBook(Book(author = bookRequest.author, title = bookRequest.title))
     }
-    fun saveBook(newBook: Book): Mono<Book> {
+
+    private fun saveBook(newBook: Book): Mono<Book> {
         return bookRepository.save(newBook)
     }
 }
