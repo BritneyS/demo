@@ -13,5 +13,7 @@ class Routes(
     @Bean
     fun bookRouter(): RouterFunction<ServerResponse> = router {
         GET("/books", bookHandler::getBooks)
+        POST("/books", bookHandler::createBook)
+
     }
 }

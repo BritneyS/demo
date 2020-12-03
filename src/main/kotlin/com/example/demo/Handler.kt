@@ -4,7 +4,9 @@ import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
+import org.springframework.web.reactive.function.server.bodyToMono
 import reactor.core.publisher.Mono
+import java.net.URI
 
 @Component
 class Handler(
@@ -18,4 +20,22 @@ class Handler(
 
     }
 
+    fun createBook(request: ServerRequest): Mono<ServerResponse> {
+        return request
+            .bodyToMono<CreateBookRequestBody>()
+            .flatMap { requestBody ->
+                bookService.createBook(requestBody)
+            }
+            .flatMap { book ->
+                ServerResponse
+                    .created(URI.create("/books/${book.id}"))
+                    .bodyValue(Response(id = book.id))
+            }
+    }
+
 }
+
+class CreateBookRequestBody(
+    val author: String,
+    val title: String
+)
