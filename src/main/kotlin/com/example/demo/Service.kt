@@ -34,6 +34,14 @@ class Service(
             }
     }
 
+    fun deleteBookById(id: String): Mono<Book> {
+        return getBookById(id)
+            .flatMap { book ->
+                deleteBook(book)
+                .then(Mono.just(book))
+            }
+    }
+
     private fun Book.updateAuthor(newBookAuthor: String?): Book {
         return newBookAuthor?.let { this.copy(author = newBookAuthor) } ?: this
     }
@@ -44,5 +52,9 @@ class Service(
 
     private fun saveBook(newBook: Book): Mono<Book> {
         return bookRepository.save(newBook)
+    }
+
+    private fun deleteBook(book: Book): Mono<Void> {
+        return bookRepository.deleteById(book.id)
     }
 }

@@ -52,6 +52,16 @@ class Handler(
                 .bodyValue(Response(id = updatedBook.id, message = "Book with id $id updated!"))
             }
     }
+
+    fun deleteBookById(request: ServerRequest): Mono<ServerResponse> {
+        val id = request.pathVariable("id")
+        return bookService.deleteBookById(id)
+            .flatMap { deletedBook ->
+                ServerResponse
+                    .ok()
+                    .bodyValue(Response(id = deletedBook.id, message = "Book with id $id deleted!"))
+            }
+    }
 }
 
 class CreateBookRequestBody(
