@@ -22,6 +22,26 @@ class Service(
         return saveBook(Book(author = bookRequest.author, title = bookRequest.title))
     }
 
+    fun updateBookById(id: String, bookRequest: UpdateBookRequestBody): Mono<Book> {
+        return getBookById(id)
+            .map { oldBook ->
+                oldBook
+                    .updateAuthor(bookRequest.author)
+                    .updateTitle(bookRequest.title)
+            }
+            .flatMap { updatedBook ->
+                saveBook(updatedBook)
+            }
+    }
+
+    private fun Book.updateAuthor(newBookAuthor: String?): Book {
+        return newBookAuthor?.let { this.copy(author = newBookAuthor) } ?: this
+    }
+
+    private fun Book.updateTitle(newBookTitle: String?): Book {
+        return newBookTitle?.let { this.copy(title = newBookTitle) } ?: this
+    }
+
     private fun saveBook(newBook: Book): Mono<Book> {
         return bookRepository.save(newBook)
     }

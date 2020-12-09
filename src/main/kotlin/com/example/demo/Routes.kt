@@ -15,6 +15,6 @@ class Routes(
         GET("/books", bookHandler::getBooks)
         GET("/books/{id}", bookHandler::getBookById)
         POST("/books", bookHandler::createBook)
-
+        PATCH("books/{id}", bookHandler::updateBookById)
     }
 }

@@ -39,9 +39,27 @@ class Handler(
             }
     }
 
+    fun updateBookById(request: ServerRequest): Mono<ServerResponse> {
+        val id = request.pathVariable("id")
+        return request
+            .bodyToMono<UpdateBookRequestBody>()
+            .flatMap { requestBody ->
+                bookService.updateBookById(id, requestBody)
+            }
+            .flatMap { updatedBook ->
+                ServerResponse
+                .ok()
+                .bodyValue(Response(id = updatedBook.id, message = "Book with id $id updated!"))
+            }
+    }
 }
 
 class CreateBookRequestBody(
     val author: String,
     val title: String
+)
+
+class UpdateBookRequestBody(
+    val author: String?,
+    val title: String?
 )
